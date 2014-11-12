@@ -21,6 +21,8 @@ from google.appengine.ext.webapp.mail_handlers import InboundMailHandler
 from models.entry import Entry
 import re
 from email.utils import parseaddr
+from email_reply_parser import EmailReplyParser
+
 
 class LogSenderHandler(InboundMailHandler):
 	def receive(self, mail_message):
@@ -30,8 +32,9 @@ class LogSenderHandler(InboundMailHandler):
 		bodies = mail_message.bodies("text/plain")
 		email = parseaddr(mail_message.sender)[1]
 		for content_type, body in bodies:
-			Entry(email=email, body=body.decode()).put()
-			logging.info("PUT: " + body.decode())
+			reply = EmailReplyParser.parse_reply(body.decode())
+			Entry(email=email, body=reply ).put()
+			logging.info("PUT: " + reply )
 			logging.info("email: " + email)
 			
 		logging.info(mail_message.original)

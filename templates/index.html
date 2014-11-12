@@ -1,0 +1,23 @@
+{% include "header.html" %}
+<!-- https://webapp-improved.appspot.com/tutorials/gettingstarted/templates.html-->
+
+	<br>
+	{{ greetings }}, {{name}} ({{user_id}}) + {{ email }}
+
+    <a href="{{ url }}">{{ url_linktext }}</a>
+
+	<br>
+	Next email date: {{ subscriber.next_email_dt}}
+	<br>
+	You joined {{ subscriber.created}}
+	<br>
+	{% if subscriber.is_subscribed %} <p>You are subscribed!</p>{%endif%}
+
+	{%if entries %}
+	{%for entry in entries %}
+	
+	<li> {{ entry.created }}: {{ entry.body}}</li><hr>
+	{% endfor %}
+	{% endif %}
+
+	{% include "footer.html" %}

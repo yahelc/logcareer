@@ -1,0 +1,4 @@
+cron: 
+ - description: sends email
+   url: /outgoing
+   schedule: every 2 minutes
